@@ -1,0 +1,74 @@
+name: Build
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-16.04, macos-latest, windows-latest]
+        arch: [x86_64]
+        include:
+          - os: windows-latest
+            arch: i686
+    runs-on: ${{ matrix.os }}
+    name: ${{ matrix.os }} (${{matrix.arch}})
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Setup NPM
+        uses: actions/setup-node@v2
+        with:
+          registry-url: https://npm.pkg.github.com
+          scope: "@${{ github.actor }}"
+          node-version: 14
+
+      - name: Install OS Dependencies
+        if: startsWith(matrix.os, 'ubuntu')
+        run: |
+          wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 6B05F25D762E3157
+          sudo apt-get update -qq
+          sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+          sudo apt-get update -qq
+          sudo apt-get install -y gcc-5 g++-5 software-properties-common libx11-dev libxtst-dev libxt-dev libx11-xcb-dev libxkbcommon-dev libxkbcommon-x11-dev xorg-dev libxcb-xkb-dev libxkbfile-dev libxinerama-dev
+          sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 60 --slave /usr/bin/g++ g++ /usr/bin/g++-5
+
+      - name: Install Packages
+        run: npm i --ignore-scripts
+
+      - name: Change repository
+        run: |
+          sed -i 's/wilix-team/${{ github.actor }}/g' package.json
+          sed -i 's,wilix-team,${{ github.actor }},g' package.json
+          sed -i 's,"name": "iohook","name": "@${{ github.actor }}/iohook",' package.json
+          cat package.json
+
+      - name: Build & Release
+        run: npm run build:ci -- --msvs_version=2019
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          ARCH: ${{ matrix.arch }}
+          GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: prebuilds
+          path: prebuilds
+
+      - name: Setup Node For Publish
+        uses: actions/setup-node@v2
+        with:
+          registry-url: https://npm.pkg.github.com
+          scope: "@${{ github.actor }}"
+
+      - name: NPM Publish
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}

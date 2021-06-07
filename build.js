@@ -149,7 +149,7 @@ function build(runtime, version, abi) {
   if (process.platform === 'win32') {
     if (version.split('.')[0] >= 4) {
       process.env.msvs_toolset = 15
-      process.env.msvs_version = 2017
+      process.env.msvs_version = argv.msvs_version || 2017
     } else {
       process.env.msvs_toolset = 12
       process.env.msvs_version = 2013
@@ -182,7 +182,7 @@ function tarGz(runtime, abi) {
     "linux": ['build/Release/iohook.node', 'build/Release/uiohook.so'],
     "darwin": ['build/Release/iohook.node', 'build/Release/uiohook.dylib'],
   }
-  const tarPath = 'prebuilds/' + pkg.name + '-v' + pkg.version + '-' + runtime + '-v' + abi + '-' + process.platform + '-' + arch + '.tar.gz';
+  const tarPath = 'prebuilds/iohook-v' + pkg.version + '-' + runtime + '-v' + abi + '-' + process.platform + '-' + arch + '.tar.gz';
 
   files.push(tarPath)
 
@@ -207,7 +207,8 @@ function uploadFiles (files) {
     let opts = {
       pkg: pkg,
       files: files,
-      upload: process.env.GITHUB_ACCESS_TOKEN
+      upload: process.env.GITHUB_ACCESS_TOKEN,
+      "tag-prefix": "v",
     };
     upload(opts, function (err, result) {
       if (err) {

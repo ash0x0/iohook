@@ -27,10 +27,11 @@ function onerror(err) {
 function install(runtime, abi, platform, arch, cb) {
   const essential = runtime + '-v' + abi + '-' + platform + '-' + arch;
   const pkgVersion = pkg.version;
-  const currentPlatform = pkg.name + '-v' + pkgVersion + '-' + essential;
+  const currentPlatform = 'iohook-v' + pkgVersion + '-' + essential;
 
   console.log('Downloading prebuild for platform:', currentPlatform);
-  let downloadUrl = 'https://github.com/wilix-team/iohook/releases/download/v' + pkgVersion + '/' + currentPlatform + '.tar.gz';
+  const url = github(pkg)
+  let downloadUrl = url + '/releases/download/v' + pkgVersion + '/' + currentPlatform + '.tar.gz';
 
   let nuggetOpts = {
     dir: os.tmpdir(),
