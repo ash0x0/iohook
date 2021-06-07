@@ -2,8 +2,18 @@
   "name": "@ash0x0/iohook",
   "version": "0.9.2",
   "description": "Node.js global keyboard and mouse hook",
+  "homepage": "https://github.com/ash0x0/iohook",
+  "author": "Aloyan Dmitry",
+  "license": "MIT",
   "main": "index.js",
   "types": "index.d.ts",
+  "bugs": {
+    "url": "https://github.com/ash0x0/iohook/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ash0x0/iohook.git"
+  },
   "scripts": {
     "install": "node install.js",
     "build": "node build.js --upload=false",
@@ -12,10 +22,6 @@
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
     "build:print": "node -e 'require(\"./helpers\").printManualBuildParams()'"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ash0x0/iohook.git"
   },
   "keywords": [
     "hook",
@@ -28,12 +34,6 @@
     "global keypress",
     "shortcut"
   ],
-  "author": "Aloyan Dmitry",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/ash0x0/iohook/issues"
-  },
-  "homepage": "https://github.com/ash0x0/iohook#readme",
   "dependencies": {
     "github-from-package": "^0.0.0",
     "nugget": "^2.0.1",

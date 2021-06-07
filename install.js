@@ -30,8 +30,7 @@ function install(runtime, abi, platform, arch, cb) {
   const currentPlatform = 'iohook-v' + pkgVersion + '-' + essential;
 
   console.log('Downloading prebuild for platform:', currentPlatform);
-  const url = github(pkg)
-  let downloadUrl = url + '/releases/download/v' + pkgVersion + '/' + currentPlatform + '.tar.gz';
+  let downloadUrl = pkg.homepage + '/releases/download/v' + pkgVersion + '/' + currentPlatform + '.tar.gz';
 
   let nuggetOpts = {
     dir: os.tmpdir(),
