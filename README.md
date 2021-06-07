@@ -1,41 +1,40 @@
 # iohook
 
-[![Build status](https://ci.appveyor.com/api/projects/status/2ntnlh6k953he5is?svg=true)](https://ci.appveyor.com/project/Djiit/iohook)
-[![Build Status](https://travis-ci.org/wilix-team/iohook.svg?branch=master)](https://travis-ci.org/wilix-team/iohook)
 [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/iohookjs/Lobby)
-[![NPM version](https://img.shields.io/npm/v/iohook.svg)](https://www.npmjs.com/package/iohook)
 
 ## About
 
+This is a maintained and updated fork of the original [iohook](https://github.com/wilix-team/iohook) project.
+
 Node.js global native keyboard and mouse listener.
 
-This module can handle keyboard and mouse events via native hooks inside and outside your JavaScript/TypeScript application.
+This module can handle keyboard and mouse events via native hooks, inside and outside your JavaScript/TypeScript application.
 
 Found a bug? Have an idea? Feel free to post an [issue](https://github.com/wilix-team/iohook/issues) or submit a [PR](https://github.com/wilix-team/iohook/pulls).
 
 **Check out the [documentation](https://wilix-team.github.io/iohook).**
 
-## Platform support
+### Install
+
+```bash
+npm install @ash0x0/iohook --save
+```
+```bash
+yarn add @ash0x0/iohook
+```
+
+## Platform Support
 
 - Versions >= 0.6.0 support only officially supported platforms versions.
 - Versions 0.5.X are the last to support Electron < 4.0.0
 - Versions 0.4.X are the last to support for Node < 8.0 and Electron < 2.0.0
 
-## Installation
+### Build (including WSL)
 
-iohook provides prebuilt version for a bunch of OSes and platforms.
-
-### Linux (including WSL)
+On Linux (including WSL) platform, you will need `libxkbcommon-x11` installed
 
 ```bash
-# On Linux (including WSL) platform, you will need libxkbcommon-x11 installed
 sudo apt-get install -y libxkbcommon-x11-0
-```
-
-### All platforms
-
-```bash
-npm install iohook --save # or yarn add iohook
 ```
 
 ## FAQ
