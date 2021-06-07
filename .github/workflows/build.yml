@@ -24,8 +24,6 @@ jobs:
       - name: Setup NPM
         uses: actions/setup-node@v2
         with:
-          registry-url: https://npm.pkg.github.com
-          scope: "@${{ github.actor }}"
           node-version: 14
 
       - name: Install OS Dependencies
@@ -41,13 +39,6 @@ jobs:
 
       - name: Install Packages
         run: npm i --ignore-scripts
-
-      - name: Change repository
-        run: |
-          sed -i 's/wilix-team/${{ github.actor }}/g' package.json
-          sed -i 's,wilix-team,${{ github.actor }},g' package.json
-          sed -i 's,"name": "iohook","name": "@${{ github.actor }}/iohook",' package.json
-          cat package.json
 
       - name: Build & Release
         run: npm run build:ci -- --msvs_version=2019
