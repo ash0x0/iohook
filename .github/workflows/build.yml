@@ -54,7 +54,7 @@ jobs:
           name: prebuilds
           path: prebuilds
 
-      - name: Publish GH package
-        run: npm publish
+      - name: Publish NPM Package
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
